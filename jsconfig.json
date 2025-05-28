@@ -1,0 +1,8 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",                // Allow absolute imports
+    "module": "esnext",            // Enables ES module support
+    "target": "esnext"
+  },
+  "include": ["src", "renderer-entry.js"]
+}

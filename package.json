@@ -2,8 +2,10 @@
   "name": "javascript-raytracer",
   "version": "1.0.0",
   "description": "raytracer from scratch using vanilla JS and WebGPU",
-  "main": "main.js",
+  "main": "src/main/main.js",
   "scripts": {
+    "dev": "vite",
+    "build": "vite build",
     "start": "electron .",
     "test": "cucumber.js"
   },
@@ -23,6 +25,7 @@
   },
   "homepage": "https://github.com/EliteBAM/Javascript-Raytracer#readme",
   "devDependencies": {
-    "electron": "^36.2.1"
+    "electron": "^36.2.1",
+    "vite": "^6.3.5"
   }
 }
