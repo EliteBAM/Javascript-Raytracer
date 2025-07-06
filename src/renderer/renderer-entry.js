@@ -152,7 +152,7 @@ function rayTraceSphere() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
 
-    //SET UP Scene
+    //Set Up Scene
     let rayOrigin = new Point(0, 0, -5);
     let wall_z = 10;
     let wall_size = 7;
@@ -160,31 +160,30 @@ function rayTraceSphere() {
     let pixel_size = wall_size / canvas_pixels;
     let half = wall_size / 2;
 
-    //running some tests
-    let raytraceCanvas = new Canvas(canvas_pixels, canvas_pixels);
+    let raytracerCanvas = new Canvas(canvas_pixels, canvas_pixels);
     const red = new Color(0, 0.6, 1);
 
     //CREATE SPHERE
     let sphere = new Sphere(1); //unit sphere at origin with ID: 1
 
-    //set sphere transform
+    //Set Sphere Transform
     let scaleMat = scalingMatrix(1, 0.7, 1.35);
-    let rotY = rotationMatrix_Y(.1);
-    let rotZ = rotationMatrix_Z(1.1);
+    let rotY = rotationMatrix_Y(.2);
+    let rotZ = rotationMatrix_Z(Math.PI/2 * 1.5);
     sphere.transform = rotY.matrixMultiply(rotZ).matrixMultiply(scaleMat);
 
-    //set sphere Material
+    //Set Sphere Material
     sphere.material = new PhongMaterial();
     sphere.material.color = red;//new Color(1, 0.2, 1);
 
     //CREATE LIGHT
-    let light = new PointLight(new Point(-10, 10, -10), new Color(1, 1, 1));//new PointLight(new Point(canvas.width / 2 + 100, canvas.height / 2, -200), new Color(3, 3, 3));
+    let light = new PointLight(new Point(-10, 10, -10), new Color(1, 1, 1));
 
 
-    //loop through 12 points, position and rotate them, map them to the buffer.
-    for (let y = 0; y < raytraceCanvas.height; y++) {
+    //Shoot Rays from origin to virtual pixel wall
+    for (let y = 0; y < raytracerCanvas.height; y++) {
         let world_y = half - pixel_size * y;
-        for (let x = 0; x < raytraceCanvas.width; x++) {
+        for (let x = 0; x < raytracerCanvas.width; x++) {
 
             let world_x = -half + pixel_size * x;
 
@@ -192,7 +191,6 @@ function rayTraceSphere() {
 
             let ray = new Ray(rayOrigin, position.subtract(rayOrigin).normalize());
 
-            //hit sphere with ray
             let hit = sphere.intersect(ray).getHit();
 
             if(hit != null) {
@@ -207,15 +205,16 @@ function rayTraceSphere() {
 
                 //calculate the final color of the pixel using phong lighting model
                 let pixelColor = hit.object.material.lightPixel(light, worldPoint, eye, normal);
+                
                 //write position to pixel on buffer
-                raytraceCanvas.writePixel(x, y, pixelColor);
+                raytracerCanvas.writePixel(x, y, pixelColor);
             }
 
 
         }
     }
 
-    let imageData = new ImageData(raytraceCanvas.toPixelBuffer(), raytraceCanvas.width, raytraceCanvas.height);
+    let imageData = new ImageData(raytracerCanvas.toPixelBuffer(), raytracerCanvas.width, raytracerCanvas.height);
 
     ctx.putImageData(imageData, 0, 0);
 }

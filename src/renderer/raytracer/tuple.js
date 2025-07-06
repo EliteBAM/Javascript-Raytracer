@@ -1,6 +1,6 @@
 const tuple = {
 
-    add(other) { //takes in data property
+    add(other) {
         const thisdat = this.data;
         const otherdat = other.data;
 
@@ -11,7 +11,7 @@ const tuple = {
         );
     },
 
-    subtract(other) { //takes in data property
+    subtract(other) {
         const thisdat = this.data;
         const otherdat = other.data;
 
@@ -25,7 +25,7 @@ const tuple = {
         );
     },
 
-    negate() { //operates on the Float32Array of calling object
+    negate() {
         const data = this.data;
 
         return new this.constructor(
@@ -35,7 +35,7 @@ const tuple = {
         );
     },
 
-    scalarMult(scalar) { //operates on the Float32Array of calling object
+    scalarMult(scalar) {
         const data = this.data;
 
         return new this.constructor(
@@ -45,7 +45,7 @@ const tuple = {
         );
     },
 
-    scalarDiv(scalar) { //operates on the Float32Array of calling object
+    scalarDiv(scalar) {
         const data = this.data;
 
         return new this.constructor(
@@ -64,7 +64,7 @@ const tuple = {
         return Math.sqrt(this.data[0]**2 + this.data[1]**2 + this.data[2]**2 + this.data[3]**2)
     },
 
-    normalize() { //operates on the Float32Array of calling object
+    normalize() {
         const magnitude = this.magnitude();
         if (magnitude === 0) return this;
         return this.scalarDiv(magnitude);
